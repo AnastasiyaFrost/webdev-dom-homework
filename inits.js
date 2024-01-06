@@ -1,9 +1,10 @@
 import { comments } from "./main.js";
-import { addFormText } from "./add-form.js";
+// import { addFormText } from "./add-form.js";
 import { renderComments } from "./renderComments.js";
 
 
 export const initCommentsListeners = () => {
+  const addFormText = document.getElementById("add-form-text");
   const commentsElements = document.querySelectorAll(".comment");
   for (const commentElement of commentsElements) {
     commentElement.addEventListener("click", () => {

@@ -2,11 +2,6 @@ import { sanitizeHtml } from "./sanitizeHtml.js";
 import { checkInputs } from "./checkInputs.js";
 import { postCommentAPI, getComments } from "./api.js";
 
-const buttonElement = document.getElementById("add-form-button");
-const addForm = document.querySelector(".add-form");
-export const addFormText = document.getElementById("add-form-text");
-const loaderText = document.querySelector(".loader-text");
-
 export const renderAddForm = (name) => {
   const appElem = document.getElementById("app");
   const addFormHTML = `
@@ -40,6 +35,11 @@ export const renderAddForm = (name) => {
   // addFormName.addEventListener("input", () => {
   //       checkInputs([addFormName.value, addFormText.value], buttonElement)
   // });
+  const buttonElement = document.getElementById("add-form-button");
+  const addForm = document.querySelector(".add-form");
+  const addFormText = document.getElementById("add-form-text");
+  const loaderText = document.querySelector(".loader-text");
+
 
   addFormText.addEventListener("input", () => {
     checkInputs([addFormText.value], buttonElement);
