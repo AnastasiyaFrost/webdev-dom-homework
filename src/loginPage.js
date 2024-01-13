@@ -6,12 +6,12 @@ export function initAuthButtonListener() {
   authLink.addEventListener("click", () => {
     renderLogin();
     authLink.classList.add("hidden");
-  })
-};
+  });
+}
 
 export const renderLogin = () => {
-    const appElem = document.getElementById("app");
-    const loginHTML = `
+  const appElem = document.getElementById("app");
+  const loginHTML = `
     <div class="login-form">
         <input
           type="text"
@@ -32,21 +32,16 @@ export const renderLogin = () => {
         </div>
       </div>
     `;
-    appElem.innerHTML = loginHTML;
+  appElem.innerHTML = loginHTML;
 
-const loginButton = document.getElementById("login-form-button");
-const loginInp = document.getElementById('login-form-login');
-const passwordInp = document.getElementById('login-form-password');
+  const loginButton = document.getElementById("login-form-button");
+  const loginInp = document.getElementById("login-form-login");
+  const passwordInp = document.getElementById("login-form-password");
 
-
-
-
-loginButton.addEventListener("click", () => {
-    login(loginInp.value, passwordInp.value)
-    .then((responseData) => {
-        setToken(responseData.user.token);
-        renderAddForm(responseData.user.name);
-    })
-});
-}
-
+  loginButton.addEventListener("click", () => {
+    login(loginInp.value, passwordInp.value).then((responseData) => {
+      setToken(responseData.user.token);
+      renderAddForm(responseData.user.name);
+    });
+  });
+};
