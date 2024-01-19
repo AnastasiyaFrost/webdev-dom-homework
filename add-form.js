@@ -1,10 +1,10 @@
-import { sanitizeHtml } from "./sanitizeHtml.js";
-import { checkInputs } from "./checkInputs.js";
-import { postCommentAPI, getComments } from "./api.js";
+import { sanitizeHtml } from './sanitizeHtml.js'
+import { checkInputs } from './checkInputs.js'
+import { postCommentAPI, getComments } from './api.js'
 
 export const renderAddForm = (name) => {
-  const appElem = document.getElementById("app");
-  const addFormHTML = `
+    const appElem = document.getElementById('app')
+    const addFormHTML = `
     <div class="add-form">
         <input
           type="text"
@@ -26,75 +26,74 @@ export const renderAddForm = (name) => {
       </div>
       
       <p class="loader-text hidden">Загрузка комментария..</p>
-    `;
+    `
 
-  appElem.innerHTML = addFormHTML;
+    appElem.innerHTML = addFormHTML
 
-  // buttonElement.disabled = true;
+    // buttonElement.disabled = true;
 
-  // addFormName.addEventListener("input", () => {
-  //       checkInputs([addFormName.value, addFormText.value], buttonElement)
-  // });
-  const buttonElement = document.getElementById("add-form-button");
-  const addForm = document.querySelector(".add-form");
-  const addFormText = document.getElementById("add-form-text");
-  const loaderText = document.querySelector(".loader-text");
+    // addFormName.addEventListener("input", () => {
+    //       checkInputs([addFormName.value, addFormText.value], buttonElement)
+    // });
+    const buttonElement = document.getElementById('add-form-button')
+    const addForm = document.querySelector('.add-form')
+    const addFormText = document.getElementById('add-form-text')
+    const loaderText = document.querySelector('.loader-text')
 
+    addFormText.addEventListener('input', () => {
+        checkInputs([addFormText.value], buttonElement)
+    })
 
-  addFormText.addEventListener("input", () => {
-    checkInputs([addFormText.value], buttonElement);
-  });
-
-  buttonElement.addEventListener("click", () => {
-    // addFormName.classList.remove("error");
-    addFormText.classList.remove("error");
-    // if(addFormName.value === "") {
-    //   addFormName.classList.add("error");
-    //   buttonElement.setAttribute('disabled', "");
-    //   return;
-    // }
-    if (addFormText.value === "") {
-      addFormText.classList.add("error");
-      buttonElement.setAttribute("disabled", "");
-      return;
-    }
-    buttonElement.disabled = true;
-    addForm.classList.add("hidden");
-    loaderText.classList.remove("hidden");
-    postCommentAPI({ text: sanitizeHtml(addFormText.value) })
-      .then((response) => {
-        if (response.status === 400) {
-          throw new Error("Плохой запрос");
+    buttonElement.addEventListener('click', () => {
+        // addFormName.classList.remove("error");
+        addFormText.classList.remove('error')
+        // if(addFormName.value === "") {
+        //   addFormName.classList.add("error");
+        //   buttonElement.setAttribute('disabled', "");
+        //   return;
+        // }
+        if (addFormText.value === '') {
+            addFormText.classList.add('error')
+            buttonElement.setAttribute('disabled', '')
+            return
         }
-        if (response.status === 500) {
-          throw new Error("Сервер сломался");
-        }
-      })
-      .then(() => {
-        return getComments();
-      })
-      .then(() => {
-        buttonElement.disabled = false;
-        addForm.classList.remove("hidden");
-        loaderText.classList.add("hidden");
-        addFormText.value = "";
-      })
-      .catch((error) => {
-        buttonElement.disabled = false;
-        addForm.classList.remove("hidden");
-        loaderText.classList.add("hidden");
-        if (error.message === "Сервер сломался") {
-          postCommentAPI({ text: sanitizeHtml(addFormText.value) });
-          return;
-        } else if (error.message === "Плохой запрос") {
-          alert(
-            "Имя или текст не должны быть короче 3 символов, попробуй снова"
-          );
-          return;
-        } else {
-          alert("Что-то пошло не так, проверьте интернет");
-        }
-        console.log(error);
-      });
-  });
-};
+        buttonElement.disabled = true
+        addForm.classList.add('hidden')
+        loaderText.classList.remove('hidden')
+        postCommentAPI({ text: sanitizeHtml(addFormText.value) })
+            .then((response) => {
+                if (response.status === 400) {
+                    throw new Error('Плохой запрос')
+                }
+                if (response.status === 500) {
+                    throw new Error('Сервер сломался')
+                }
+            })
+            .then(() => {
+                return getComments()
+            })
+            .then(() => {
+                buttonElement.disabled = false
+                addForm.classList.remove('hidden')
+                loaderText.classList.add('hidden')
+                addFormText.value = ''
+            })
+            .catch((error) => {
+                buttonElement.disabled = false
+                addForm.classList.remove('hidden')
+                loaderText.classList.add('hidden')
+                if (error.message === 'Сервер сломался') {
+                    postCommentAPI({ text: sanitizeHtml(addFormText.value) })
+                    return
+                } else if (error.message === 'Плохой запрос') {
+                    alert(
+                        'Имя или текст не должны быть короче 3 символов, попробуй снова',
+                    )
+                    return
+                } else {
+                    alert('Что-то пошло не так, проверьте интернет')
+                }
+                console.log(error)
+            })
+    })
+}
