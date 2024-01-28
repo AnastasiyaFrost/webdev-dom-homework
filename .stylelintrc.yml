@@ -1,0 +1,4 @@
+extends: ['stylelint-config-standard', 'stylelint-prettier/recommended']
+rules:
+color-function-notation: 'legacy'
+selector-class-pattern: '^[a-zA-Z0-9_-]+$'

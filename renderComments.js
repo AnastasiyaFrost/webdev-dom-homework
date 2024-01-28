@@ -1,12 +1,12 @@
-import { comments } from "./main.js";
-import { initCommentsListeners, initLikeButtonsListeners } from "./inits.js";
+import { comments } from './main.js'
+import { initCommentsListeners, initLikeButtonsListeners } from './inits.js'
 
-const listElement = document.getElementById('list');
+const listElement = document.getElementById('list')
 
 export const renderComments = () => {
- const commentsHtml = comments
-  .map((comment, index) => {
-   return `<li data-index="${index}" class="comment">
+    const commentsHtml = comments
+        .map((comment, index) => {
+            return `<li data-index="${index}" class="comment">
     <div class="comment-header">
      <div>${comment.name}</div>
      <div>${comment.timestamp}</div>
@@ -15,25 +15,24 @@ export const renderComments = () => {
     <div class="comment-body">
      <div class="comment-text">
       ${comment.text
-       .replaceAll("BEGIN_QUOTE", "<div class='quote'>")
-       .replaceAll("QUOTE_END", "</div>")
-      }
+          .replaceAll('BEGIN_QUOTE', "<div class='quote'>")
+          .replaceAll('QUOTE_END', '</div>')}
      </div>
     </div>
 
     <div class="comment-footer">
      <div class="likes">
       <span class="likes-counter">${comment.likesCounter}</span>
-      <button data-index="${index}" class="like-button ${comment.isLiked===true?'-active-like':''}">
+      <button data-index="${index}" class="like-button ${comment.isLiked === true ? 'active-like' : ''}">
       </button>
      </div>
     </div>
-   </li>`;
-  })
- .join("");
+   </li>`
+        })
+        .join('')
 
- listElement.innerHTML = commentsHtml;
+    listElement.innerHTML = commentsHtml
 
- initCommentsListeners();
- initLikeButtonsListeners();
-};
+    initCommentsListeners()
+    initLikeButtonsListeners()
+}
